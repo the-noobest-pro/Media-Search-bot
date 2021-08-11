@@ -4,19 +4,15 @@ from urllib.parse import quote
 from pyrogram import Client, emoji, filters
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultCachedDocument
-from pyrogram.errors import FloodWait
-from info import USERBOT_STRING_SESSION, API_ID, API_HASH, ADMINS, id_pattern
-from utils import save_file
 
 from utils import get_search_results
 from info import CACHE_TIME, SHARE_BUTTON_TEXT, AUTH_USERS, AUTH_CHANNEL
 
 logger = logging.getLogger(__name__)
 cache_time = 0 if AUTH_USERS or AUTH_CHANNEL else CACHE_TIME
-user_bot = Client(USERBOT_STRING_SESSION, API_ID, API_HASH)
 
 @Client.on_inline_query(filters.user(AUTH_USERS) if AUTH_USERS else None)
-async def answer(user_bot, query):
+async def answer(bot, query):
     """Show search results for given inline query"""
 
     if AUTH_CHANNEL and not await is_subscribed(bot, query):
